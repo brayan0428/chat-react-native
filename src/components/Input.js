@@ -1,17 +1,26 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, TouchableOpacity, View } from 'react-native'
 import { Item, Input as InputNB, Icon } from 'native-base'
 
-export default function Input() {
+export default function Input({sendMessage}) {
+  const [message, setMessage] = useState('')
+
+  const onSubmit = () => {
+    sendMessage(message)
+    setMessage('')
+  }
+
   return (
     <View style={styles.container}>
       <Item style={styles.itemInput}>
         <InputNB 
           placeholder="Enviar mensaje..."
           style={styles.input}
+          value={message}
+          onChangeText={e => setMessage(e)}
         />
-        <TouchableOpacity>
-          <Icon name="home" type="FontAwesome" style={styles.iconSend}/>
+        <TouchableOpacity onPress={onSubmit}>
+          <Icon name="send" type="FontAwesome" style={styles.iconSend}/>
         </TouchableOpacity>
       </Item>
     </View>
